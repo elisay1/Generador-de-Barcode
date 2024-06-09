@@ -8,6 +8,11 @@
 </p>
 
 # Generador de Cantidades Requeridas de Barcode en Laravel
+![image](https://github.com/elisay1/Generador-de-Barcode/assets/109012405/6e644d55-b400-4248-8864-4de567cef7c9)
+--
+![image](https://github.com/elisay1/Generador-de-Barcode/assets/109012405/6d3cafe2-9f92-4abe-a2ad-95bdd7facb57)
+--
+![image](https://github.com/elisay1/Generador-de-Barcode/assets/109012405/049a1de0-3c83-4513-be3b-71fec3e9b52c)
 
 **Descripción:**
 
@@ -107,6 +112,11 @@ El **"Generador de Cantidades Requeridas de Barcode en Laravel"** es una aplicac
    ```bash
    git push origin feature/nueva-funcionalidad
 
+## Redes Sociales
+- Apóyame siguiéndome
+- TikTok: [@elisaycode](https://www.tiktok.com/@elisaycode)
+- YouTube: [DevCode_256](https://www.youtube.com/@DevCode_256)
+- Instagram: [@eli.sayes](https://www.instagram.com/eli.sayes/)
    
 ## License
 
