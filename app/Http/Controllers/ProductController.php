@@ -24,18 +24,37 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $number = mt_rand(1000000000, 9999999999);
+        // $number = mt_rand(1000000000, 9999999999);
 
-        $request['product_code'] = $number;
-        Product::create($request->all());
+        // $request['product_code'] = $number;
+        // Product::create($request->all());
 
-        return redirect()->route('productos.index');
+        // return redirect()->route('productos.index');
+        // Validar los datos del formulario
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'product_code' => 'required|string|max:255', // Añade la validación para el código de barras
+        ]);
+
+        // Crear un nuevo producto
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->product_code = $request->input('product_code'); // Asignar el código de barras
+        $product->save();
+
+        // Redirigir a alguna ruta después de crear el producto
+        return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente');
     }
 
     public function productCodeExists($number)
     {
         return Product::whereProductCode($number)->exists();
     }
+
 
     public function show($id)
     {

@@ -1,8 +1,9 @@
 @extends('layout')
 
-<title>Barcode for {{ $product->name }}</title>
+<title>Barcode &nbsp; {{ $product->name }}</title>
 <style>
     .barcode-box {
+        width: 25%;
         border: 3px solid #000;
         padding: 10px;
         margin: 5px;
@@ -14,26 +15,35 @@
         margin-bottom: 5px;
     }
 
+    .barcode {
+        font-size: 0;
+        position: relative;
+        width: 180px;
+        height: 30px;
+        margin: auto;
+    }
+
     .product-code {
-        margin-top: 5px;
+        text-align: center;
     }
 
     .product-price {
         margin-top: 5px;
         color: red;
     }
-    .product-price span{
-        font-weight: bold;    
+
+    .product-price span {
+        font-weight: bold;
     }
 </style>
 
 @section('content')
-    <h1>Lista de etiquetas de{{ $product->name }}</h1>
+    <h1>Lista de etiquetas de&nbsp; &nbsp;{{ $product->name }}</h1>
     <br>
     @for ($i = 0; $i < $quantity; $i++)
         <div class="barcode-box">
             <div class="product-name">Producto: {{ strtoupper($product->name) }}</div>
-            <div>{!! $barcode !!}</div>
+            <div class="barcode">{!! $barcode !!}</div>
             <div class="product-code">Codigo: {{ $product->product_code }}</div>
             <div class="product-price"><span>Precio: S/.{{ $product->price }}</span></div>
         </div>

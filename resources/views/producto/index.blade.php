@@ -9,6 +9,7 @@
         display: inline-block;
         text-align: center;
     }
+
     @media print {
         .barcode-box {
             width: 24.6%;
@@ -17,19 +18,23 @@
 
         }
     }
+
     .product-name {
         /* font-weight: bold; */
         margin-bottom: 5px;
     }
+
     .product-code {
         margin-top: 5px;
     }
+
     .product-price {
         margin-top: 3px;
         color: red;
     }
+
     .product-price span {
-        font-weight: bold;    
+        font-weight: bold;
     }
 </style>
 @section('content')
@@ -157,7 +162,7 @@
                                 num_etiquetas: num_etiquetas
                             },
                             success: function(response) {
-                                console.log(response);
+                                //console.log(response);
                                 var product = response.product;
                                 var numEtiquetas = response.num_etiquetas;
 
@@ -166,7 +171,7 @@
                                     modalContent += `
                                 <div class="barcode-box">
                                     <div class="product-name">${product.name}</div> 
-                                    <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($product->product_code, 'C128', 2, 50)}}" alt=" ${product.name}">
+                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->product_code, 'C128', 2, 50) }}" alt=" ${product.name}">
                                     <div class="product-price"><span>Precio: S/.${product.price}</span></div>
                                 </div>
                             `;
@@ -209,25 +214,45 @@
 
         }
 
-      
-
         function printEtiquetaProducto() {
-            // Obtén el contenido del modal con el código de barras
-            var contenido = document.getElementById('modal-body-content-etiquetaProducto').innerHTML;
-            console.log(contenido);
-
-            // Copia el contenido al cuerpo del documento
-            var contenidoOriginal = document.body.innerHTML;
-            document.body.innerHTML = contenido;
-
-            // Imprime el documento
-            window.print();
-
-            // Restaura el contenido original del cuerpo del documento
-            document.body.innerHTML = contenidoOriginal;
-
             // Cierra el modal
             $('#modalEtiquetaProducto').modal('hide');
+
+            // Espera un breve período de tiempo antes de imprimir para asegurarse de que el modal se haya cerrado
+            setTimeout(function() {
+                // Obtén el contenido del modal con el código de barras
+                var contenido = document.getElementById('modal-body-content-etiquetaProducto').innerHTML;
+
+                // Copia el contenido al cuerpo del documento
+                var contenidoOriginal = document.body.innerHTML;
+                document.body.innerHTML = contenido;
+
+                // Imprime el documento
+                window.print();
+
+                // Restaura el contenido original del cuerpo del documento
+                document.body.innerHTML = contenidoOriginal;
+            }, 500); // Espera 500 milisegundos (medio segundo) antes de imprimir
         }
+
+
+        // function printEtiquetaProducto() {
+        //     // Obtén el contenido del modal con el código de barras
+        //     var contenido = document.getElementById('modal-body-content-etiquetaProducto').innerHTML;
+        //     // console.log(contenido);
+
+        //     // Copia el contenido al cuerpo del documento
+        //     var contenidoOriginal = document.body.innerHTML;
+        //     document.body.innerHTML = contenido;
+
+        //     // Imprime el documento
+        //     window.print();
+
+        //     // Restaura el contenido original del cuerpo del documento
+        //     document.body.innerHTML = contenidoOriginal;
+
+        //     // Cierra el modal
+        //     $('#modalEtiquetaProducto').modal('hide');
+        // }
     </script>
 @endsection

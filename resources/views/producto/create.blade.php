@@ -5,6 +5,10 @@
     <form action="{{ route('productos.store') }}" method="POST">
         @csrf
         <div class="mb-3">
+            <label for="product_code" class="form-label">Código de barras</label>
+            <input type="text" class="form-control" id="product_code" name="product_code">
+        </div>
+        <div class="mb-3">
             <label for="name" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="name" name="name">
         </div>
