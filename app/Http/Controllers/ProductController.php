@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Milon\Barcode\DNS1D;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class ProductController extends Controller
 {
@@ -31,20 +29,53 @@ class ProductController extends Controller
 
         // return redirect()->route('productos.index');
         // Validar los datos del formulario
+        ///**************************Crear manual eñ codigo */
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'description' => 'nullable|string',
+        //     'price' => 'required|numeric',
+        //     'product_code' => 'required|string|max:255', // Añade la validación para el código de barras
+        // ]);
+
+        // // Crear un nuevo producto
+        // $product = new Product();
+        // $product->name = $request->input('name');
+        // $product->description = $request->input('description');
+        // $product->price = $request->input('price');
+        // $product->product_code = $request->input('product_code'); // Asignar el código de barras
+        // $product->save();
+
+        // // Redirigir a alguna ruta después de crear el producto
+        // return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente');
+
+        //******************************Generar codigo manual y automatico */
+        // Validar los datos del formulario
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
-            'product_code' => 'required|string|max:255', // Añade la validación para el código de barras
+            'product_code_manual' => 'nullable|string|max:255', 
+            'generate_barcode' => 'required|string|max:255', 
         ]);
 
-        // Crear un nuevo producto
-        $product = new Product();
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->product_code = $request->input('product_code'); // Asignar el código de barras
-        $product->save();
+        // Obtener el valor del campo "Generar automáticamente" (checkbox)
+        $generateBarcodeAutomatically = $request->has('generate_barcode');
+
+        // Si se ha seleccionado generar automáticamente, generar un código de barras aleatorio
+        if ($generateBarcodeAutomatically) {
+            $productCode = mt_rand(1000000000, 9999999999);
+        } else {
+            // Si no, obtener el código de barras ingresado manualmente
+            $productCode = $request->input('product_code_manual');
+        }
+
+        // Crear un nuevo producto con los datos del formulario
+        Product::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'product_code' => $productCode, // Asignar el código de barras
+        ]);
 
         // Redirigir a alguna ruta después de crear el producto
         return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente');
@@ -96,6 +127,7 @@ class ProductController extends Controller
         // ])->render();
 
         // return response()->json(['html' => $html]);
+        //************************************************************** */
         $idProducto = $request->input('idProducto');
         $num_etiquetas = $request->input('num_etiquetas', 1); // Valor predeterminado de 1 si no se proporciona
 

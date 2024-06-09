@@ -18,6 +18,11 @@
 
         }
     }
+    .barcode img {
+        width: 100%;
+        height: 50px;
+    }
+
 
     .product-name {
         /* font-weight: bold; */
@@ -48,7 +53,6 @@
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Código</th>
-                <th></th>
                 <th>Generar codigo barras</th>
                 <th>Código de Barras</th>
                 <th>Acciones</th>
@@ -62,32 +66,33 @@
                     <td class="align-middle text-center">{{ $product->price }}</td>
                     <td class="align-middle text-center">{{ $product->product_code }}</td>
                     {{-- <td><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->product_code, "C128B")}}" alt="barcode" /></td> --}}
-                    <td></td>
+                  
                     <td class="align-middle text-center">
                         <form action="{{ route('productos.barcode', $product->id) }}" method="get">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-7">
                                     <input type="number" class="form-control" name="quantity" placeholder="cantidad"
                                         min="1">
                                 </div>
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary">Generate Barcode</button>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-info"><i class="fa-solid fa-barcode" style="color: white"></i></button>
                                 </div>
                             </div>
                         </form>
                     </td>
                     <td class="align-middle text-center">{!! DNS1D::getBarcodeHTML($product->product_code, 'C128', 2, 50) !!}</td>
                     <td class="align-middle text-center">
-                        <button type="button" class="btn btn-success" onclick="etiquetaProducto({{ $product->id }})">
-                            <i class="fas fa-print"></i> Imprimir Etiqueta
-                        </button>
-                        <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary">Editar</a>
-                        <form action="{{ route('productos.destroy', $product->id) }}" method="POST"
-                            style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <button type="button" class="btn btn-success" onclick="etiquetaProducto({{ $product->id }})">
+                                <i class="fa-solid fa-ticket"></i>
+                            </button>
+                            <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="{{ route('productos.destroy', $product->id) }}" method="POST" >
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
@@ -171,8 +176,8 @@
                                     modalContent += `
                                 <div class="barcode-box">
                                     <div class="product-name">${product.name}</div> 
-                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->product_code, 'C128', 2, 50) }}" alt=" ${product.name}">
-                                    <div class="product-price"><span>Precio: S/.${product.price}</span></div>
+                                   <div class="barcode"> <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->product_code, 'C128', 2, 50) }}" alt=" ${product.name}"></div>
+                                    <div class="product-price"><span>Precio: S/. &nbsp;${product.price}</span></div>
                                 </div>
                             `;
                                 }
