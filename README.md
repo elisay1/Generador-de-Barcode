@@ -7,60 +7,107 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Generador de Cantidades Requeridas de Barcode en Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Descripción:**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+El **"Generador de Cantidades Requeridas de Barcode en Laravel"** es una aplicación web desarrollada utilizando el framework Laravel, diseñada para generar y gestionar códigos de barras en función de las necesidades específicas del usuario. Esta herramienta permite a los usuarios generar múltiples etiquetas de código de barras para productos, según la cantidad requerida, y proporciona una interfaz sencilla para la visualización y posterior impresión de las etiquetas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Características Principales
 
-## Learning Laravel
+1. **Generación Dinámica de Códigos de Barras:**
+   - Permite generar códigos de barras en formato PNG utilizando la librería **milon/barcode**.
+   - Admite varios formatos de código de barras, incluyendo C128 y PHARMA2T.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Interfaz de Usuario Intuitiva:**
+   - Formulario de entrada para especificar la cantidad de etiquetas requeridas.
+   - Modal para previsualizar las etiquetas generadas antes de imprimir.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Impresión de Etiquetas:**
+   - Funcionalidad para imprimir etiquetas directamente desde la aplicación.
+   - Opciones de formato para personalizar la apariencia de las etiquetas.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Almacenamiento y Gestión:**
+   - Posibilidad de almacenar la imagen generada del código de barras en la base de datos.
+   - Gestión eficiente de los productos y sus códigos de barras asociados.
 
-## Laravel Sponsors
+## Beneficios
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Eficiencia:** Facilita la generación de múltiples etiquetas de código de barras de manera rápida y sencilla.
+- **Flexibilidad:** Ofrece opciones de personalización para satisfacer las necesidades específicas de los usuarios.
+- **Integración:** Se integra perfectamente con la base de datos para gestionar y almacenar la información de los productos y sus códigos de barras.
+- **Usabilidad:** La interfaz de usuario amigable permite una experiencia fluida, incluso para usuarios sin conocimientos técnicos avanzados.
 
-### Premium Partners
+## Tecnologías Utilizadas
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Backend:** Laravel
+- **Frontend:** Bootstrap, JavaScript
+- **Librerías:** milon/barcode
+- **Base de Datos:** MySQL
 
-## Contributing
+## Requisitos del Sistema
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP >= 8.1
+- Composer
+- MySQL
+- Extensiones de PHP: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML
 
-## Code of Conduct
+## Instalación
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/elisay1/Generador-de-Barcode.git
+   cd generador-barcode-laravel
 
-## Security Vulnerabilities
+## Configuraciones 
+2. Instalar las dependencias:
+   ```bash
+   composer install
+3. Configurar el archivo .env:
+   ```bash
+   cp .env.example .env  
+4. Genera tu clave
+    ```bash
+     php artisan key:generate
+5. Instala la libreria milon/barcode
+    ```bash
+    composer require milon/barcode
+6. Configurar la base de datos en el archivo .env:
+   ```bash
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nombre_de_tu_base_de_datos
+   DB_USERNAME=tu_usuario
+   DB_PASSWORD=tu_contraseña
+7. Migrar la base de datos:
+   ```bash
+   php artisan migrate
+8. Iniciar el servidor de desarrollo:
+    - Iniciar el servidor de desarrollo:
+    ```bash
+    php artisan serve
+9. Uso
+    - Accede a la aplicación en tu navegador:
+    ```bash
+    http://127.0.0.1:8000
+## Contribuciones
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 
+1. Haz un fork del proyecto.
+2. Crea una nueva rama:
+   ```bash
+   git checkout -b feature/nueva-funcionalidad
+3. Realiza tus cambios y haz commit:
+   ```bash
+   git commit -am 'Añadir nueva funcionalidad'
+
+5. Sube tus cambios:
+   ```bash
+   git push origin feature/nueva-funcionalidad
+
+   
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
