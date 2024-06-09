@@ -1,6 +1,37 @@
 @extends('layout')
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    .barcode-box {
+        width: 45%;
+        border: 3px solid #000;
+        padding: 10px;
+        margin: 5px;
+        display: inline-block;
+        text-align: center;
+    }
+    @media print {
+        .barcode-box {
+            width: 24.6%;
+            margin: 3 auto;
+            spacing: 2rem;
 
+        }
+    }
+    .product-name {
+        /* font-weight: bold; */
+        margin-bottom: 5px;
+    }
+    .product-code {
+        margin-top: 5px;
+    }
+    .product-price {
+        margin-top: 3px;
+        color: red;
+    }
+    .product-price span {
+        font-weight: bold;    
+    }
+</style>
 @section('content')
     <h1>Lista de Productos</h1>
     <br>
@@ -12,6 +43,7 @@
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Código</th>
+                <th></th>
                 <th>Generar codigo barras</th>
                 <th>Código de Barras</th>
                 <th>Acciones</th>
@@ -24,6 +56,8 @@
                     <td class="align-middle text-center">{{ $product->description }}</td>
                     <td class="align-middle text-center">{{ $product->price }}</td>
                     <td class="align-middle text-center">{{ $product->product_code }}</td>
+                    {{-- <td><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->product_code, "C128B")}}" alt="barcode" /></td> --}}
+                    <td></td>
                     <td class="align-middle text-center">
                         <form action="{{ route('productos.barcode', $product->id) }}" method="get">
                             <div class="row">
@@ -123,11 +157,25 @@
                                 num_etiquetas: num_etiquetas
                             },
                             success: function(response) {
-                                // Obtener el contenido HTML del JSON
-                                var modalContent = response.html;
+                                console.log(response);
+                                var product = response.product;
+                                var numEtiquetas = response.num_etiquetas;
 
-                                // Mostrar el contenido en el modal
+                                var modalContent = '';
+                                for (var i = 0; i < numEtiquetas; i++) {
+                                    modalContent += `
+                                <div class="barcode-box">
+                                    <div class="product-name">${product.name}</div> 
+                                    <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($product->product_code, 'C128', 2, 50)}}" alt=" ${product.name}">
+                                    <div class="product-price"><span>Precio: S/.${product.price}</span></div>
+                                </div>
+                            `;
+                                }
+
                                 $('#modal-body-content-etiquetaProducto').html(modalContent);
+
+                                // Lógica para mostrar los códigos de barras en los canvas
+
                                 var modalEtiquetaProducto = new bootstrap.Modal(document.getElementById(
                                     'modalEtiquetaProducto'));
                                 modalEtiquetaProducto.show();
@@ -160,6 +208,8 @@
             // }
 
         }
+
+      
 
         function printEtiquetaProducto() {
             // Obtén el contenido del modal con el código de barras

@@ -28,7 +28,8 @@
 </style>
 
 @section('content')
-    <h1>Barcode for {{ $product->name }}</h1>
+    <h1>Lista de etiquetas de{{ $product->name }}</h1>
+    <br>
     @for ($i = 0; $i < $quantity; $i++)
         <div class="barcode-box">
             <div class="product-name">Producto: {{ strtoupper($product->name) }}</div>

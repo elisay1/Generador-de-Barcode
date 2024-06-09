@@ -61,52 +61,33 @@ class ProductController extends Controller
     //$numEtiquetas = $request->input('num_etiquetas');
     public function generarEtiquetaProducto(Request $request)
     {
+
+        // $idProducto = $request->query('idProducto');
+        // $num_etiquetas = $request->query('num_etiquetas', 1);
+        // $product = Product::findOrFail($idProducto);
+
+        // $barcodeGenerator = new DNS1D();
+        // $barcodeGenerator->setStorPath(__DIR__.'/cache/');
+        // $barcode = $barcodeGenerator->getBarcodeHTML($product->product_code, 'C128');
+
+        // $html = view('producto.index', [
+        //     'product' => $product,
+        //     'barcode' => $barcode,
+        //     'num_etiquetas' => $num_etiquetas
+        // ])->render();
+
+        // return response()->json(['html' => $html]);
         $idProducto = $request->input('idProducto');
-        $num_etiquetas = $request->input('num_etiquetas', 1);
-        $product = Product::findOrFail($idProducto);
+        $num_etiquetas = $request->input('num_etiquetas', 1); // Valor predeterminado de 1 si no se proporciona
 
-        $barcodeGenerator = new DNS1D();
-        $barcodeGenerator->setStorPath(__DIR__.'/cache/');
-        $barcode = $barcodeGenerator->getBarcodeHTML($product->product_code, 'C128');
+        // Obtener el producto
+        $producto = Product::findOrFail($idProducto);
 
-        // Construir el HTML directamente
-        $html = '
-            <style>
-                .barcode-box {
-                    border: 3px solid #000;
-                    padding: 10px;
-                    margin: 5px;
-                    display: inline-block;
-                    text-align: center;
-                }
-                .product-name {
-                    font-weight: bold;
-                    margin-bottom: 5px;
-                }
-                .product-code {
-                    margin-top: 5px;
-                }
-                .product-price {
-                    margin-top: 3px;
-                    color: red;
-                }
-                    .product-price span{
-                    font-weight: bold;    
-                }
-            </style>';
-        
-        for ($i = 0; $i < $num_etiquetas; $i++) {
-            $html .= '
-                <div class="barcode-box">
-                    <div class="product-name">Producto: ' . $product->name . '</div>
-                    <div>' . $barcode . '</div>
-                    <div class="product-code">Código: ' . $product->product_code . '</div>
-                    <div class="product-price"><span>Precio: S/.' . $product->price . '</span> </div>
-                </div>';
-        }
-
-        return response()->json(['html' => $html]);
-    
+        // Devolver los datos de producto y número de etiquetas como respuesta
+        return response()->json([
+            'product' => $producto,
+            'num_etiquetas' => $num_etiquetas,
+        ]);
     }
     // public function generateBarcode($id)
     // {

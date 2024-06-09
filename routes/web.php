@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductoController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -21,5 +22,8 @@ Route::post('/printBarcode', [ProductController::class, 'printBarcode'])->name('
 Route::get('/generar-etiqueta-producto', [ProductController::class, 'generarEtiquetaProducto'])->name('generar-etiqueta-producto');
 
 Route::get('/products/{id}/barcode', [ProductController::class, 'generateBarcode'])->name('productos.barcode');
+
+
+// Route::resource('productos', ProductoController::class);
 
 

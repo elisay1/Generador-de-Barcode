@@ -9,7 +9,8 @@
         "dompdf/dompdf": "^3.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "milon/barcode": "^11.0"
+        "milon/barcode": "^11.0",
+        "tecnickcom/tcpdf": "^6.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
